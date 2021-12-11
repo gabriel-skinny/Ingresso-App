@@ -29,7 +29,7 @@ class RegistrarSalaService {
         filme_id: filme.id
       },
       include: {
-        filme: true
+        filme: true,
       }
     });
 
