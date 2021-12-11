@@ -25,7 +25,7 @@ model Assento {
   sala Sala @relation(fields: [sala_id], references: [id])
 
   coluna String
-  ocupado Boolean
+  ocupado Boolean @default(false)
 }
 
 model Sala {
