@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Cliente {
+  id Int @id @default(autoincrement())
+  nome String
+  email String
+  password String
+  isAdmin Boolean @default(false)
+}
+
+model Assento {
+  id Int @id @default(autoincrement())
+
+  sala_id Int
+  sala Sala @relation(fields: [sala_id], references: [id])
+
+  coluna String
+  ocupado Boolean
+}
+
+model Sala {
+  id Int @id @default(autoincrement())
+  assentos Assento[]
+  filme_id Int
+  filme Filme @relation(fields: [filme_id], references: [id])
+  numero String
+}
+
+model Filme {
+  id Int @id @default(autoincrement())
+  titulo String
+  diretor String
+  descricao String
+  duracao String
+  sala Sala?
+}
