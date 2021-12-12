@@ -8,14 +8,7 @@ interface IAssento {
 
 class RegistrarAssentoService {
   async execute(data: IAssento) {
-    let assento = await prismaClient.assento.findFirst({
-      where: {
-        coluna: data.coluna
-      }
-    })
-
-    if (assento) throw new Error("Assento already created");
-
+    
     const sala = await prismaClient.sala.findFirst({
       where: {
         numero: data.numeroSala
@@ -23,6 +16,15 @@ class RegistrarAssentoService {
     })
 
     if (!sala) throw new Error("Sala does not exists");
+
+    let assento = await prismaClient.assento.findFirst({
+      where: {
+        coluna: data.coluna,
+        sala_id: sala.id
+      }
+    })
+
+    if (assento) throw new Error("Assento already created");
 
     assento = await prismaClient.assento.create({
       data: {
